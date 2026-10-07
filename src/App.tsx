@@ -17,6 +17,7 @@ import { MultimediaLibrary } from './components/multimedia/MultimediaLibrary';
 import { EvaluationSystem } from './components/evaluation/EvaluationSystem';
 import { DidacticCalendar } from './components/calendar/DidacticCalendar';
 import { UnitQuizModule } from './components/quizzes/UnitQuizModule';
+import { VideoEdpuzzleQuiz } from './components/multimedia/VideoEdpuzzleQuiz';
 import { QuickTeacherTools } from './components/QuickTeacherTools';
 import { Box, Compass } from 'lucide-react';
 
@@ -24,6 +25,8 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('panoramica');
   const [currentClass, setCurrentClass] = useState<string>('2ª B');
   const [simulatorSubTab, setSimulatorSubTab] = useState<'po' | 'disegno'>('po');
+  const [edpuzzleTargetVideoId, setEdpuzzleTargetVideoId] = useState<string | undefined>(undefined);
+  const [targetUnitId, setTargetUnitId] = useState<string>('u3-proiezioni-ortogonali');
 
   // Application States
   const [units, setUnits] = useState<DidacticUnit[]>(INITIAL_UNITS);
@@ -34,7 +37,15 @@ export default function App() {
 
   // Handlers
   const handleOpenUnitQuiz = (unitId: string) => {
+    setTargetUnitId(unitId);
     setActiveTab('quiz');
+  };
+
+  const handleOpenEdpuzzle = (videoId?: string) => {
+    if (videoId) {
+      setEdpuzzleTargetVideoId(videoId);
+    }
+    setActiveTab('edpuzzle');
   };
 
   const handleOpenSimulator = () => {
@@ -54,6 +65,10 @@ export default function App() {
     setResources(prev => [newRes, ...prev]);
   };
 
+  const handleUpdateResource = (updatedResource: MediaResource) => {
+    setResources(prev => prev.map(r => r.id === updatedResource.id ? updatedResource : r));
+  };
+
   const handleToggleResourceFavorite = (id: string) => {
     setResources(prev => prev.map(r => r.id === id ? { ...r, favorite: !r.favorite } : r));
   };
@@ -64,6 +79,26 @@ export default function App() {
 
   const handleToggleEventComplete = (eventId: string) => {
     setCalendarEvents(prev => prev.map(e => e.id === eventId ? { ...e, completed: !e.completed } : e));
+  };
+
+  const handleRecordStudentGrade = (studentId: string, gradeValue: number, subject: string) => {
+    setStudents(prev => prev.map(st => {
+      if (st.id === studentId) {
+        const newGrade = {
+          id: `grade-${Date.now()}`,
+          date: new Date().toISOString().split('T')[0],
+          type: 'Quiz Video EdPuzzle' as const,
+          subject,
+          value: gradeValue,
+          notes: 'Valutazione formativa completata tramite checkpoint video EdPuzzle sulla trascrizione.'
+        };
+        return {
+          ...st,
+          grades: [newGrade, ...st.grades]
+        };
+      }
+      return st;
+    }));
   };
 
   const pendingEventsCount = calendarEvents.filter(e => !e.completed).length;
@@ -150,20 +185,42 @@ export default function App() {
           />
         )}
 
-        {/* TAB 4: QUIZ FINALE UNITÀ */}
-        {activeTab === 'quiz' && (
-          <UnitQuizModule
-            units={units}
+        {/* TAB 4: QUIZ VIDEO EDPUZZLE SU TRASCRIZIONE */}
+        {activeTab === 'edpuzzle' && (
+          <VideoEdpuzzleQuiz
+            resources={resources}
+            initialResourceId={edpuzzleTargetVideoId}
+            currentClass={currentClass}
+            students={students}
+            onAssignToCalendar={handleAddCalendarEvent}
+            onRecordGrade={handleRecordStudentGrade}
+            onUpdateResource={handleUpdateResource}
           />
         )}
 
-        {/* TAB 5: LIBRERIA RISORSE MULTIMEDIALI */}
+        {/* TAB 5: QUIZ FINALE UNITÀ */}
+        {activeTab === 'quiz' && (
+          <UnitQuizModule
+            units={units}
+            initialUnitId={targetUnitId}
+            resources={resources}
+            onOpenEdpuzzle={handleOpenEdpuzzle}
+          />
+        )}
+
+        {/* TAB 6: LIBRERIA RISORSE MULTIMEDIALI */}
         {activeTab === 'risorse' && (
           <MultimediaLibrary
             resources={resources}
+            currentClass={currentClass}
+            students={students}
             onOpenSimulator={handleOpenSimulator}
             onAddResource={handleAddResource}
             onToggleFavorite={handleToggleResourceFavorite}
+            onOpenEdpuzzle={handleOpenEdpuzzle}
+            onAssignToCalendar={handleAddCalendarEvent}
+            onRecordGrade={handleRecordStudentGrade}
+            onUpdateResource={handleUpdateResource}
           />
         )}
 

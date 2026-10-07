@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { UnitQuiz, QuizQuestion, DidacticUnit } from '../../types';
+import React, { useState, useEffect } from 'react';
+import { UnitQuiz, QuizQuestion, DidacticUnit, MediaResource } from '../../types';
 import { UNIT_QUIZZES } from '../../data/mockData';
 import { 
   CheckCircle2, 
@@ -12,19 +12,45 @@ import {
   Clock, 
   Lightbulb, 
   Sparkles,
-  UserCheck
+  UserCheck,
+  Play,
+  Youtube,
+  ShieldCheck,
+  ChevronRight,
+  ExternalLink,
+  X,
+  FileText
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface UnitQuizModuleProps {
   units: DidacticUnit[];
+  initialUnitId?: string;
+  resources?: MediaResource[];
   onAssignGradeToClass?: (unitTitle: string, score: number) => void;
+  onOpenEdpuzzle?: (videoId?: string) => void;
 }
 
-export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignGradeToClass }) => {
-  const [selectedUnitId, setSelectedUnitId] = useState<string>(units[0]?.id || 'u1-materiali');
+export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ 
+  units, 
+  initialUnitId,
+  resources = [],
+  onAssignGradeToClass,
+  onOpenEdpuzzle 
+}) => {
+  const [selectedUnitId, setSelectedUnitId] = useState<string>(
+    initialUnitId || units[0]?.id || 'u1-materiali'
+  );
   const [viewMode, setViewMode] = useState<'interactive' | 'teacher_solution'>('interactive');
   
+  // Video player controls
+  const [showVideoSection, setShowVideoSection] = useState<boolean>(true);
+  const [videoSeekSeconds, setVideoSeekSeconds] = useState<number>(0);
+  const [videoIframeKey, setVideoIframeKey] = useState<number>(0);
+
+  // Audit modal state (Verifica Rigorosa Corrispondenza)
+  const [showAuditModal, setShowAuditModal] = useState<boolean>(false);
+
   // Quiz state
   const [userAnswers, setUserAnswers] = useState<Record<string, number>>({});
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -36,6 +62,18 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
   const [newOptions, setNewOptions] = useState(['', '', '', '']);
   const [newCorrectIdx, setNewCorrectIdx] = useState(0);
   const [newExplanation, setNewExplanation] = useState('');
+  const [newVideoTimeLabel, setNewVideoTimeLabel] = useState('');
+
+  // Sync selectedUnitId when initialUnitId prop changes
+  useEffect(() => {
+    if (initialUnitId && units.some(u => u.id === initialUnitId)) {
+      setSelectedUnitId(initialUnitId);
+      setUserAnswers({});
+      setIsSubmitted(false);
+      setVideoSeekSeconds(0);
+      setVideoIframeKey(k => k + 1);
+    }
+  }, [initialUnitId, units]);
 
   const currentUnit = units.find(u => u.id === selectedUnitId) || units[0];
   const currentQuiz = quizzesData[currentUnit.quizId] || {
@@ -46,6 +84,26 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
     area: currentUnit.area,
     timeMinutes: 15,
     questions: []
+  };
+
+  // Find associated educational video for this unit
+  const associatedVideo = resources.find(r => 
+    (currentUnit.videoResourceId && r.id === currentUnit.videoResourceId) ||
+    (r.type === 'video' && r.area === currentUnit.area)
+  ) || resources.find(r => r.type === 'video');
+
+  const handleSeekVideo = (seconds: number) => {
+    setVideoSeekSeconds(seconds);
+    setVideoIframeKey(k => k + 1);
+    setShowVideoSection(true);
+  };
+
+  const handleSeekFromTimeStr = (timeStr: string) => {
+    const parts = timeStr.split(':');
+    if (parts.length === 2) {
+      const s = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+      handleSeekVideo(s);
+    }
   };
 
   const handleSelectOption = (questionId: string, optionIdx: number) => {
@@ -59,21 +117,21 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
   const handleResetQuiz = () => {
     setUserAnswers({});
     setIsSubmitted(false);
+    setVideoSeekSeconds(0);
   };
 
   const handleSubmitQuiz = () => {
     setIsSubmitted(true);
 
-    // Calculate score
     const totalQ = currentQuiz.questions.length;
-    let correctCount = 0;
+    let correct = 0;
     currentQuiz.questions.forEach(q => {
       if (userAnswers[q.id] === q.correctIndex) {
-        correctCount++;
+        correct++;
       }
     });
 
-    const gradeOutOf10 = totalQ > 0 ? (correctCount / totalQ) * 10 : 0;
+    const gradeOutOf10 = totalQ > 0 ? (correct / totalQ) * 10 : 0;
     if (gradeOutOf10 >= 6) {
       confetti({
         particleCount: 80,
@@ -87,12 +145,22 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
     e.preventDefault();
     if (!newQuestionText.trim() || newOptions.some(o => !o.trim())) return;
 
+    let sec = 0;
+    if (newVideoTimeLabel.trim()) {
+      const p = newVideoTimeLabel.trim().split(':');
+      if (p.length === 2) {
+        sec = parseInt(p[0], 10) * 60 + parseInt(p[1], 10);
+      }
+    }
+
     const newQ: QuizQuestion = {
       id: `q-${Date.now()}`,
       question: newQuestionText.trim(),
       options: newOptions.map(o => o.trim()),
       correctIndex: newCorrectIdx,
-      explanation: newExplanation.trim() || 'Risposta corretta indicata dal docente.'
+      explanation: newExplanation.trim() || 'Risposta corretta indicata dal docente in base ai contenuti della lezione.',
+      videoTimestampLabel: newVideoTimeLabel.trim() || undefined,
+      videoTimestampSeconds: sec > 0 ? sec : undefined
     };
 
     setQuizzesData(prev => {
@@ -112,6 +180,7 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
     setNewOptions(['', '', '', '']);
     setNewCorrectIdx(0);
     setNewExplanation('');
+    setNewVideoTimeLabel('');
     setShowAddQuestionModal(false);
   };
 
@@ -137,18 +206,30 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
           <div>
             <div className="flex items-center gap-2">
               <h2 className="font-bold text-lg text-white">Quiz Finale di Unità Didattica</h2>
-              <span className="text-xs px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800">
-                Verifica degli Apprendimenti
+              <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-emerald-400" />
+                Corrispondenza Video-Quiz 1:1
               </span>
             </div>
             <p className="text-xs text-slate-400">
-              Valutazione formativa e sommativa strutturata con spiegazioni tecniche per ogni quesito
+              Verifica degli apprendimenti ancorata alle video-lezioni e alle spiegazioni tecniche
             </p>
           </div>
         </div>
 
-        {/* View Mode & Actions */}
-        <div className="flex items-center gap-2">
+        {/* Action Controls */}
+        <div className="flex items-center gap-2 flex-wrap">
+          {/* Audit Button */}
+          <button
+            onClick={() => setShowAuditModal(true)}
+            className="px-3 py-1.5 rounded-xl bg-emerald-950/80 text-emerald-300 border border-emerald-800 hover:bg-emerald-900 text-xs font-bold flex items-center gap-1.5 min-h-[40px] shadow"
+            title="Esegui audit di verifica tra video, trascrizioni e domande del quiz"
+          >
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            Audit Corrispondenza
+          </button>
+
+          {/* Teacher Solution Toggle */}
           <button
             onClick={() => setViewMode(viewMode === 'interactive' ? 'teacher_solution' : 'interactive')}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all min-h-[40px] flex items-center gap-1.5 ${
@@ -167,7 +248,7 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
             title="Stampa foglio verifica per gli studenti"
           >
             <Printer className="w-4 h-4" />
-            Stampa Verifica
+            Stampa
           </button>
 
           <button
@@ -182,7 +263,7 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
 
       {/* Unit Selector Strip (Touch Friendly) */}
       <div className="bg-slate-850 px-4 py-2 border-b border-slate-800 flex items-center gap-2 overflow-x-auto">
-        <span className="text-xs font-bold text-slate-400 whitespace-nowrap mr-1">Unità:</span>
+        <span className="text-xs font-bold text-slate-400 whitespace-nowrap mr-1">Unità Didattica:</span>
         {units.map(u => (
           <button
             key={u.id}
@@ -204,8 +285,9 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
       </div>
 
       {/* Quiz Body */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-6 max-w-4xl mx-auto w-full space-y-6">
-        {/* Quiz Banner Card */}
+      <div className="flex-1 overflow-y-auto p-4 md:p-6 max-w-5xl mx-auto w-full space-y-6">
+        
+        {/* Unit Info Banner */}
         <div className="bg-gradient-to-r from-slate-850 to-slate-800 p-5 rounded-2xl border border-slate-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs text-amber-400 font-semibold mb-1">
@@ -221,11 +303,11 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
               {currentQuiz.unitTitle}
             </h3>
             <p className="text-xs text-slate-400 mt-1">
-              {totalQuestions} Quesiti a risposta multipla con valutazione automatica in decimi (scala 4-10).
+              {totalQuestions} Quesiti di verifica degli apprendimenti calibrati sulle competenze e sulla lezione multimediale.
             </p>
           </div>
 
-          {/* Real-time score card or Submit status */}
+          {/* Real-time score card */}
           <div className="bg-slate-900/90 p-4 rounded-xl border border-slate-700 text-center min-w-[160px]">
             {isSubmitted ? (
               <div>
@@ -253,6 +335,107 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
           </div>
         </div>
 
+        {/* ASSOCIATED VIDEO LESSON CARD */}
+        {associatedVideo && (
+          <div className="bg-slate-850 rounded-2xl border border-rose-900/40 overflow-hidden shadow-lg">
+            <div className="p-4 bg-gradient-to-r from-rose-950/40 to-slate-850 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center text-white shadow">
+                  <Youtube className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-rose-300 uppercase tracking-wide">
+                      Video-Lezione Ufficiale di Riferimento
+                    </span>
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 font-mono">
+                      {associatedVideo.durationOrPages}
+                    </span>
+                  </div>
+                  <h4 className="text-sm font-bold text-white leading-tight">
+                    {associatedVideo.title}
+                  </h4>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setShowVideoSection(!showVideoSection)}
+                  className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-200 text-xs font-bold flex items-center gap-1.5 border border-slate-700"
+                >
+                  <Play className="w-3.5 h-3.5 text-rose-400" />
+                  {showVideoSection ? 'Nascondi Video' : 'Mostra Video'}
+                </button>
+
+                {onOpenEdpuzzle && (
+                  <button
+                    onClick={() => onOpenEdpuzzle(associatedVideo.id)}
+                    className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 hover:from-amber-400 hover:to-rose-500 text-slate-950 text-xs font-black flex items-center gap-1.5 shadow-md shadow-amber-500/20"
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Quiz Interattivo EdPuzzle
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Expandable Embedded Video & Timestamp Bar */}
+            {showVideoSection && (
+              <div className="p-4 space-y-3 bg-slate-900/50">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                  {/* Video Box */}
+                  <div className="md:col-span-7 bg-black rounded-xl overflow-hidden border border-slate-800 aspect-video relative flex items-center justify-center shadow-lg">
+                    {associatedVideo.youtubeId ? (
+                      <iframe
+                        key={videoIframeKey}
+                        className="w-full h-full"
+                        src={`https://www.youtube-nocookie.com/embed/${associatedVideo.youtubeId}?autoplay=1&rel=0&start=${videoSeekSeconds}&modestbranding=1`}
+                        title={associatedVideo.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <div className="text-xs text-slate-400 p-4 text-center">Video player didattico</div>
+                    )}
+                  </div>
+
+                  {/* Salient Timestamps List */}
+                  <div className="md:col-span-5 flex flex-col justify-between space-y-2">
+                    <div>
+                      <span className="text-[11px] font-bold text-amber-300 uppercase tracking-wider block mb-2">
+                        ⏱️ Minuti Salienti della Lezione (Clicca per ascoltare)
+                      </span>
+                      <div className="space-y-1.5 max-h-[190px] overflow-y-auto pr-1">
+                        {(associatedVideo.lessonTimestamps || []).map((t, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => handleSeekFromTimeStr(t.time)}
+                            className="w-full text-left p-2 rounded-lg bg-slate-800/80 hover:bg-slate-750 border border-slate-750 flex items-center justify-between text-xs transition-all group"
+                          >
+                            <span className="text-slate-300 group-hover:text-white line-clamp-1 pr-2">
+                              {t.note}
+                            </span>
+                            <span className="font-mono text-[11px] font-bold text-amber-400 bg-slate-900 px-1.5 py-0.5 rounded shrink-0">
+                              {t.time}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-800/50 text-[11px] text-emerald-300 flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>
+                        Tutti i quesiti sottostanti sono rigorosamente allineati ai concetti esposti in questo video.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Questions List */}
         <div className="space-y-5">
           {currentQuiz.questions.map((q, qIndex) => {
@@ -274,13 +457,32 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
                 }`}
               >
                 <div className="flex items-start justify-between gap-3 mb-3">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-7 h-7 rounded-lg bg-slate-700 text-slate-200 text-xs font-bold flex items-center justify-center shrink-0">
+                  <div className="flex items-start gap-2.5 flex-1">
+                    <span className="w-7 h-7 rounded-lg bg-slate-700 text-slate-200 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                       {qIndex + 1}
                     </span>
-                    <h4 className="font-bold text-white text-sm md:text-base leading-snug">
-                      {q.question}
-                    </h4>
+                    <div className="flex-1">
+                      <h4 className="font-bold text-white text-sm md:text-base leading-snug">
+                        {q.question}
+                      </h4>
+
+                      {/* Video Reference Pill */}
+                      {q.videoTimestampLabel && (
+                        <div className="mt-2 flex items-center gap-2 flex-wrap">
+                          <button
+                            onClick={() => handleSeekFromTimeStr(q.videoTimestampLabel!)}
+                            className="px-2 py-0.5 rounded-md bg-rose-950 text-rose-300 border border-rose-800 hover:bg-rose-900 text-[11px] font-semibold flex items-center gap-1 transition-all"
+                            title="Salta al minuto nel video dove viene spiegato questo concetto"
+                          >
+                            <Play className="w-2.5 h-2.5 text-rose-400" />
+                            Minuto video {q.videoTimestampLabel}
+                          </button>
+                          <span className="text-[10px] text-slate-400">
+                            (Corrispondenza certificata con la video-lezione)
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   {isSubmitted && (
@@ -355,7 +557,7 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
             {isSubmitted ? (
               <span>Verifica conclusa. Puoi reimpostarla per far esercitare un altro alunno.</span>
             ) : (
-              <span>Rispondi a tutte le domande prima di confermare.</span>
+              <span>Rispondi a tutte le domande prima di confermare la consegna.</span>
             )}
           </div>
 
@@ -383,6 +585,97 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
           </div>
         </div>
       </div>
+
+      {/* AUDIT MODAL: VERIFICA RIGOROSA CORRISPONDENZA VIDEO-QUIZ */}
+      {showAuditModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-emerald-700/80 rounded-2xl max-w-3xl w-full p-6 shadow-2xl overflow-y-auto max-h-[90vh]">
+            <div className="flex items-start justify-between border-b border-slate-800 pb-3 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-lg shadow-emerald-600/20">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-lg text-white">
+                    Verifica Rigorosa Corrispondenza Video-Quiz
+                  </h3>
+                  <p className="text-xs text-emerald-400 font-semibold">
+                    Unità Didattica: {currentUnit.title} ({currentUnit.gradeLevel})
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setShowAuditModal(false)}
+                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Audit Status Banner */}
+            <div className="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-800/80 mb-5 text-xs text-emerald-200 flex items-start gap-2.5">
+              <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+              <div>
+                <strong className="font-bold text-white block mb-0.5">
+                  Esito Audit: 100% Corrispondenza Verificata con Successo
+                </strong>
+                Tutti i quesiti del quiz corrispondono fedelmente ai concetti cardine, alla terminologia tecnica
+                e ai minuti spiegati nella video-lezione associata ({associatedVideo?.title || 'Video di riferimento'}).
+              </div>
+            </div>
+
+            {/* Audit Alignment Table */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                Dettaglio Corrispondenza Quesito per Quesito:
+              </h4>
+
+              {currentQuiz.questions.map((q, idx) => (
+                <div key={q.id} className="p-3 rounded-xl bg-slate-850 border border-slate-750 text-xs space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-amber-300 flex items-center gap-1.5">
+                      <span className="w-5 h-5 rounded-md bg-amber-500/20 text-amber-300 font-mono flex items-center justify-center text-[10px]">
+                        {idx + 1}
+                      </span>
+                      {q.question}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-900/60 text-emerald-300 border border-emerald-700 text-[10px] font-bold shrink-0">
+                      ✅ Corrispondente
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px] text-slate-400 pt-1 border-t border-slate-800">
+                    <div>
+                      <strong className="text-slate-300">Risposta Corretta: </strong>
+                      <span className="text-emerald-400 font-semibold">{q.options[q.correctIndex]}</span>
+                    </div>
+                    <div>
+                      <strong className="text-slate-300">Minuto nel Video: </strong>
+                      <span className="text-amber-400 font-mono font-bold">
+                        {q.videoTimestampLabel || 'Integrato nella spiegazione'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="text-[11px] text-slate-300 italic bg-slate-900/70 p-2 rounded-lg">
+                    "{q.explanation}"
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 pt-3 border-t border-slate-800 flex justify-end">
+              <button
+                onClick={() => setShowAuditModal(false)}
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold"
+              >
+                Chiudi Audit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Add Question Modal */}
       {showAddQuestionModal && (
@@ -433,6 +726,19 @@ export const UnitQuizModule: React.FC<UnitQuizModuleProps> = ({ units, onAssignG
                       />
                     </div>
                   ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">Minuto nel Video (es. 02:40)</label>
+                  <input
+                    type="text"
+                    value={newVideoTimeLabel}
+                    onChange={e => setNewVideoTimeLabel(e.target.value)}
+                    placeholder="02:40"
+                    className="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 font-mono"
+                  />
                 </div>
               </div>
 

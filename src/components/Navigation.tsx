@@ -8,7 +8,9 @@ import {
   GraduationCap, 
   Calendar, 
   Award,
-  Compass
+  Compass,
+  Sparkles,
+  Youtube
 } from 'lucide-react';
 
 interface NavigationProps {
@@ -42,6 +44,13 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, onChangeTab }
       id: 'unita_lezioni', 
       label: 'Unità & Lezioni', 
       icon: <BookOpen className="w-4 h-4 text-blue-400" /> 
+    },
+    { 
+      id: 'edpuzzle', 
+      label: 'Quiz Video EdPuzzle', 
+      icon: <Sparkles className="w-4 h-4 text-rose-400" />,
+      badge: 'Trascrizioni',
+      badgeColor: 'bg-rose-950 text-rose-300 border-rose-800'
     },
     { 
       id: 'quiz', 

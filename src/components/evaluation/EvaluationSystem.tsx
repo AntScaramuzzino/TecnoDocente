@@ -35,7 +35,7 @@ export const EvaluationSystem: React.FC<EvaluationSystemProps> = ({
   const [targetStudentId, setTargetStudentId] = useState<string>('');
 
   // Add Grade Form state
-  const [gradeType, setGradeType] = useState<'Tavola Disegno' | 'Verifica Scritta' | 'Interrogazione Orale' | 'Laboratorio STEAM'>('Tavola Disegno');
+  const [gradeType, setGradeType] = useState<'Tavola Disegno' | 'Verifica Scritta' | 'Interrogazione Orale' | 'Laboratorio STEAM' | 'Quiz Video EdPuzzle'>('Tavola Disegno');
   const [gradeSubject, setGradeSubject] = useState('Tavola n. 3 - Proiezioni Ortogonali');
   const [gradeValue, setGradeValue] = useState<number>(8.0);
   const [gradeNotes, setGradeNotes] = useState('');
@@ -484,6 +484,7 @@ export const EvaluationSystem: React.FC<EvaluationSystemProps> = ({
                     <option value="Verifica Scritta">Verifica Scritta</option>
                     <option value="Interrogazione Orale">Interrogazione Orale</option>
                     <option value="Laboratorio STEAM">Laboratorio STEAM</option>
+                    <option value="Quiz Video EdPuzzle">Quiz Video EdPuzzle</option>
                   </select>
                 </div>
                 <div>

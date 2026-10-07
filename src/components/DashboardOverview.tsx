@@ -77,7 +77,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
             </span>
             <button
               onClick={() => onNavigateTab('proiezioni_disegno')}
-              className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs flex items-center justify-between shadow-lg shadow-cyan-600/20 min-h-[44px]"
+              className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs flex items-center justify-between shadow-lg shadow-cyan-600/20 min-h-[40px]"
             >
               <div className="flex items-center gap-2">
                 <Box className="w-4 h-4" />
@@ -86,8 +86,18 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
               <ChevronRight className="w-4 h-4" />
             </button>
             <button
+              onClick={() => onNavigateTab('edpuzzle')}
+              className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-bold text-xs flex items-center justify-between shadow-lg shadow-rose-600/20 min-h-[40px]"
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4" />
+                <span>Quiz Video EdPuzzle</span>
+              </div>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+            <button
               onClick={() => onNavigateTab('quiz')}
-              className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-750 text-amber-300 border border-slate-700 font-bold text-xs flex items-center justify-between min-h-[44px]"
+              className="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-750 text-amber-300 border border-slate-700 font-bold text-xs flex items-center justify-between min-h-[40px]"
             >
               <div className="flex items-center gap-2">
                 <Award className="w-4 h-4" />

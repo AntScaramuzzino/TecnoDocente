@@ -25,6 +25,7 @@ export interface DidacticUnit {
   color: string;
   quizId: string;
   resourcesCount: number;
+  videoResourceId?: string;
 }
 
 export interface LessonPlan {
@@ -49,6 +50,25 @@ export interface LessonPlan {
 
 export type ResourceType = 'video' | 'scheda' | 'modello3d' | 'mappa' | 'infografica';
 
+export interface VideoTranscriptItem {
+  time: string;           // "01:20"
+  seconds: number;        // 80
+  speaker?: string;       // "Professore" | "Voce Narrante"
+  text: string;           // Testo fedele della trascrizione
+  keyConcept?: string;    // Concetto chiave
+}
+
+export interface VideoCheckpointQuestion {
+  id: string;
+  timestampSeconds: number;
+  timestampLabel: string;   // "01:20"
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+  transcriptSnippet: string; // Trascrizione associata
+}
+
 export interface MediaResource {
   id: string;
   title: string;
@@ -62,6 +82,8 @@ export interface MediaResource {
   youtubeId?: string;
   channelName?: string;
   lessonTimestamps?: { time: string; note: string }[];
+  transcript?: VideoTranscriptItem[];
+  edpuzzleQuestions?: VideoCheckpointQuestion[];
   tags: string[];
   favorite?: boolean;
   contentSnippet?: string;
@@ -74,7 +96,7 @@ export interface Student {
   grades: {
     id: string;
     date: string;
-    type: 'Tavola Disegno' | 'Verifica Scritta' | 'Interrogazione Orale' | 'Laboratorio STEAM';
+    type: 'Tavola Disegno' | 'Verifica Scritta' | 'Interrogazione Orale' | 'Laboratorio STEAM' | 'Quiz Video EdPuzzle';
     subject: string;
     value: number; // 4 to 10
     rubricScores?: {
@@ -97,7 +119,7 @@ export interface CalendarEvent {
   gradeLevel: GradeLevel;
   date: string; // YYYY-MM-DD
   time?: string;
-  type: 'consegna_tavola' | 'verifica' | 'laboratorio' | 'lezione_speciale' | 'scadenza';
+  type: 'consegna_tavola' | 'verifica' | 'laboratorio' | 'lezione_speciale' | 'scadenza' | 'video_quiz_edpuzzle';
   description?: string;
   unitId?: string;
   completed?: boolean;
@@ -110,6 +132,10 @@ export interface QuizQuestion {
   correctIndex: number;
   explanation: string;
   imageScheme?: string;
+  videoResourceId?: string;
+  videoTimestampLabel?: string;
+  videoTimestampSeconds?: number;
+  videoSnippet?: string;
 }
 
 export interface UnitQuiz {
@@ -126,7 +152,8 @@ export type ActiveTab =
   | 'panoramica'
   | 'unita_lezioni'
   | 'proiezioni_disegno'
+  | 'quiz'
   | 'risorse'
+  | 'edpuzzle'
   | 'valutazione'
-  | 'calendario'
-  | 'quiz';
+  | 'calendario';

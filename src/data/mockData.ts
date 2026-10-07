@@ -26,7 +26,8 @@ export const INITIAL_UNITS: DidacticUnit[] = [
     tags: ['Legno', 'Metalli', 'Plastiche', '3R', 'Proprietà Meccaniche'],
     color: '#0284c7', // sky-600
     quizId: 'quiz-u1',
-    resourcesCount: 8
+    resourcesCount: 8,
+    videoResourceId: 'res-yt-legno-hub'
   },
   {
     id: 'u2-disegno-base',
@@ -51,7 +52,8 @@ export const INITIAL_UNITS: DidacticUnit[] = [
     tags: ['Squadratura', 'Bisettrice', 'Poligoni Inscritti', 'Norme UNI', 'Compasso'],
     color: '#0d9488', // teal-600
     quizId: 'quiz-u2',
-    resourcesCount: 9
+    resourcesCount: 9,
+    videoResourceId: 'res-yt-squadratura-f4'
   },
   {
     id: 'u3-proiezioni-ortogonali',
@@ -77,7 +79,8 @@ export const INITIAL_UNITS: DidacticUnit[] = [
     tags: ['Metodo Monge', 'PO PV PL', 'Linea di Terra', 'Spigoli Nascosti', 'Ribaltamento'],
     color: '#6366f1', // indigo-500
     quizId: 'quiz-u3',
-    resourcesCount: 12
+    resourcesCount: 12,
+    videoResourceId: 'res-yt-po-monge'
   },
   {
     id: 'u4-energia',
@@ -102,7 +105,8 @@ export const INITIAL_UNITS: DidacticUnit[] = [
     tags: ['Fotovoltaico', 'Eolico', 'Idroelettrico', 'Turbina-Alternatore', 'Decarbonizzazione'],
     color: '#ea580c', // orange-600
     quizId: 'quiz-u4',
-    resourcesCount: 7
+    resourcesCount: 7,
+    videoResourceId: 'res-yt-centrale-idroelettrica'
   },
   {
     id: 'u5-edilizia-abitazione',
@@ -127,7 +131,8 @@ export const INITIAL_UNITS: DidacticUnit[] = [
     tags: ['Cemento Armato', 'Telaio', 'Impianti Domestici', 'Bioarchitettura', 'APE Classe A'],
     color: '#16a34a', // green-600
     quizId: 'quiz-u5',
-    resourcesCount: 6
+    resourcesCount: 6,
+    videoResourceId: 'res-yt-cemento-armato'
   },
   {
     id: 'u6-elettricita',
@@ -153,7 +158,8 @@ export const INITIAL_UNITS: DidacticUnit[] = [
     tags: ['Legge di Ohm', 'Salvavita', 'Smart Grid', 'Serie/Parallelo', 'Etichetta Energetica'],
     color: '#eab308', // yellow-500
     quizId: 'quiz-u6',
-    resourcesCount: 7
+    resourcesCount: 7,
+    videoResourceId: 'res-yt-corrente-elettrica'
   }
 ];
 
@@ -291,11 +297,118 @@ export const INITIAL_RESOURCES: MediaResource[] = [
     tags: ['Proiezioni Ortogonali', 'Monge', 'PO PV PL', 'Disegno Tecnico'],
     favorite: true,
     lessonTimestamps: [
-      { time: '00:00', note: 'Introduzione: rappresentare la terza dimensione sul foglio piano' },
-      { time: '01:20', note: 'I tre piani di proiezione perpendicolari (Triedro di Monge)' },
-      { time: '02:45', note: 'La vista dall\'alto proiettata sul Piano Orizzontale (PO)' },
-      { time: '03:50', note: 'La vista frontale (PV) e la vista da sinistra (PL)' },
-      { time: '05:10', note: 'Apertura del diedro e rotazione sul piano di ribaltamento' }
+      { time: '00:00', note: 'Il problema della rappresentazione: 3D nello spazio vs 2D sul foglio' },
+      { time: '00:50', note: 'Gaspard Monge e il Triedro di riferimento a 3 piani ortogonali' },
+      { time: '01:30', note: 'Definizione dei piani: PO (orizzontale), PV (verticale), PL (laterale) e LT' },
+      { time: '02:40', note: 'I raggi proiettanti ortogonali e la vista dall\'alto (Pianta sul PO)' },
+      { time: '03:45', note: 'La vista frontale (Prospetto sul PV), laterale (Fianco sul PL) e spigoli nascosti' },
+      { time: '04:50', note: 'Ribaltamento del diedro: apertura a 180° e archi di compasso con centro in O' }
+    ],
+    transcript: [
+      {
+        time: '00:00',
+        seconds: 0,
+        speaker: 'Prof.ssa Martina (Tecnologia Duepuntozero)',
+        text: 'Benvenuti a questa lezione di tecnologia e disegno. Nel mondo reale tutti gli oggetti hanno tre dimensioni: larghezza, altezza e profondità. Tuttavia il nostro foglio da disegno è una superficie piana a sole due dimensioni. Come possiamo rappresentare un solido senza distorcerne le misure reali?',
+        keyConcept: 'Il problema della terza dimensione'
+      },
+      {
+        time: '00:50',
+        seconds: 50,
+        speaker: 'Prof.ssa Martina',
+        text: 'Per risolvere questo problema, alla fine del Settecento il matematico francese Gaspard Monge ideò il metodo delle proiezioni ortogonali. Immaginiamo di inserire l\'oggetto all\'interno di uno spazio delimitato da tre piani reciprocamente perpendicolari tra loro: questo apparato prende il nome di Triedro di Monge.',
+        keyConcept: 'Il Triedro di Monge'
+      },
+      {
+        time: '01:30',
+        seconds: 90,
+        speaker: 'Prof.ssa Martina',
+        text: 'I tre piani fondamentali sono: il Piano Orizzontale (PO), che corrisponde al pavimento o piano d\'appoggio; il Piano Verticale (PV), che corrisponde alla parete di fronte a noi; e il Piano Laterale (PL), che è la parete posta alla nostra sinistra. La linea di intersezione orizzontale tra PO e PV si chiama Linea di Terra (LT).',
+        keyConcept: 'PO, PV, PL e Linea di Terra'
+      },
+      {
+        time: '02:40',
+        seconds: 160,
+        speaker: 'Prof.ssa Martina',
+        text: 'I raggi visivi, detti raggi proiettanti, partono dall\'infinito: sono paralleli tra loro e incidono a 90 gradi, cioè perpendicolarmente, sui piani di proiezione. Se ci posizioniamo esattamente sopra l\'oggetto e guardiamo dall\'alto verso il basso, otteniamo sul Piano Orizzontale la vista dall\'alto, detta comunemente pianta.',
+        keyConcept: 'Raggi proiettanti e vista sul PO'
+      },
+      {
+        time: '03:45',
+        seconds: 225,
+        speaker: 'Prof.ssa Martina',
+        text: 'Guardando l\'oggetto di fronte, i raggi proiettano la sagoma sul Piano Verticale: otteniamo così il prospetto o vista frontale. Guardando poi dal fianco sinistro verso destra otteniamo la vista laterale sul Piano Laterale. Ricordate: gli spigoli che non sono direttamente visibili dal nostro punto di vista devono essere disegnati a norma UNI con linea tratteggiata.',
+        keyConcept: 'Prospetto, fianco e spigoli nascosti a tratteggio'
+      },
+      {
+        time: '04:50',
+        seconds: 290,
+        speaker: 'Prof.ssa Martina',
+        text: 'Infine, per disegnare tutto su un unico foglio, dobbiamo ribaltare i piani nello spazio! Il Piano Orizzontale ruota di 90 gradi verso il basso, mentre il Piano Laterale si apre a 90 gradi verso destra. Nel quadrante in basso a destra, detto piano di ribaltamento, puntiamo il compasso con centro nell\'origine O per trasferire con archi le profondità dal PO alla Linea di Terra verso il PL.',
+        keyConcept: 'Apertura del diedro e archi con compasso in O'
+      }
+    ],
+    edpuzzleQuestions: [
+      {
+        id: 'edp-po-1',
+        timestampSeconds: 90,
+        timestampLabel: '01:30',
+        question: 'Nel Triedro di Monge, quale piano corrisponde alla vista dell\'oggetto osservato dall\'alto?',
+        options: [
+          'Il Piano Verticale (PV)',
+          'Il Piano Orizzontale (PO)',
+          'Il Piano Laterale (PL)',
+          'La Linea di Terra (LT)'
+        ],
+        correctIndex: 1,
+        explanation: 'La docente ha appena spiegato che il Piano Orizzontale (PO) raccoglie la vista dall\'alto (pianta), corrispondendo al piano del pavimento.',
+        transcriptSnippet: 'I tre piani fondamentali sono: il Piano Orizzontale (PO), che corrisponde al pavimento o piano d\'appoggio...'
+      },
+      {
+        id: 'edp-po-2',
+        timestampSeconds: 160,
+        timestampLabel: '02:40',
+        question: 'Come sono definiti i raggi proiettanti nel metodo delle proiezioni ortogonali?',
+        options: [
+          'Raggi convergenti verso un solo punto dell\'occhio',
+          'Raggi paralleli tra loro e perpendicolari (a 90°) ai piani di proiezione',
+          'Raggi inclinati a 45 gradi assonometrici',
+          'Raggi a spirale che ruotano attorno al solido'
+        ],
+        correctIndex: 1,
+        explanation: 'Come evidenziato nel video, la caratteristica fondamentale dell\'ortogonalità è che i raggi sono paralleli tra loro e perpendicolari ai piani di proiezione.',
+        transcriptSnippet: 'I raggi visivi, detti raggi proiettanti, partono dall\'infinito: sono paralleli tra loro e incidono a 90 gradi, cioè perpendicolarmente, sui piani...'
+      },
+      {
+        id: 'edp-po-3',
+        timestampSeconds: 225,
+        timestampLabel: '03:45',
+        question: 'Secondo le norme UNI citate dalla docente, come si disegnano gli spigoli di un solido non visibili direttamente?',
+        options: [
+          'Con linea continua di grosso spessore',
+          'Non si disegnano affatto sulla tavola',
+          'Con linea tratteggiata di medio spessore',
+          'Con linea a punto e tratto'
+        ],
+        correctIndex: 2,
+        explanation: 'Gli spigoli nascosti devono essere rappresentati con linea a tratto medio (tratteggiata), per distinguerli da quelli in vista a tratto continuo.',
+        transcriptSnippet: 'Ricordate: gli spigoli che non sono direttamente visibili dal nostro punto di vista devono essere disegnati a norma UNI con linea tratteggiata.'
+      },
+      {
+        id: 'edp-po-4',
+        timestampSeconds: 290,
+        timestampLabel: '04:50',
+        question: 'Quale strumento si usa nel quadrante di ribaltamento (in basso a destra) con centro nell\'origine O per trasferire le misure su PL?',
+        options: [
+          'La riga graduata a mano libera',
+          'Il compasso (balaustrone) tracciando archi di cerchio',
+          'Il goniometro a 45 gradi',
+          'La gomma pane'
+        ],
+        correctIndex: 1,
+        explanation: 'Nel piano di ribaltamento si punta il compasso nell\'origine O per ruotare le proiezioni dal PO alla Linea di Terra verso il PL.',
+        transcriptSnippet: 'Nel quadrante in basso a destra, detto piano di ribaltamento, puntiamo il compasso con centro nell\'origine O per trasferire con archi le profondità...'
+      }
     ],
     contentSnippet: 'Il metodo di Monge scompone l\'oggetto nelle sue tre proiezioni ortogonali senza deformazioni prospettiche, consentendo di leggere quote e dimensioni reali.'
   },
@@ -307,18 +420,102 @@ export const INITIAL_RESOURCES: MediaResource[] = [
     gradeLevel: '1ª Media',
     durationOrPages: '8:45 min',
     channelName: 'HUB Scuola / Mondadori Education',
-    youtubeId: 'Nhv3yScOOsQ',
-    mediaUrl: 'https://www.youtube-nocookie.com/embed/Nhv3yScOOsQ',
+    youtubeId: 's66Zt2rS5lU',
+    mediaUrl: 'https://www.youtube-nocookie.com/embed/s66Zt2rS5lU',
     thumbnailUrl: 'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=400&q=80',
     description: 'Documentario educational ufficiale HUB Scuola: dall\'albero nella foresta alla segheria, abbattimento, scortecciatura, segagione in tavole, stagionatura e fabbricazione dei pannelli di compensato e MDF.',
     tags: ['Legno', 'Silvicoltura', 'Segheria', 'MDF', 'Compensato'],
     favorite: true,
     lessonTimestamps: [
-      { time: '00:30', note: 'La struttura del tronco: corteccia, alburno e durame' },
-      { time: '02:10', note: 'Abbattimento in inverno e sramatura dei tronchi' },
-      { time: '04:05', note: 'Lavorazioni in segheria: segagione e tagli commerciali' },
-      { time: '06:15', note: 'Stagionatura naturale e artificiale nei forni ad aria calda' },
-      { time: '07:30', note: 'I semilavorati: tranciati, multistrati e truciolari' }
+      { time: '00:30', note: 'La struttura biologica del tronco: corteccia, alburno e durame' },
+      { time: '02:10', note: 'Abbattimento controllato in inverno e sramatura dei tronchi' },
+      { time: '04:05', note: 'Lavorazioni in segheria: segagione in travi e tavole commerciali' },
+      { time: '06:15', note: 'Stagionatura naturale all\'aria vs artificiale nei forni ad aria calda' },
+      { time: '07:30', note: 'I semilavorati: compensati a fibre ortogonali, truciolari e pannelli MDF' }
+    ],
+    transcript: [
+      {
+        time: '00:30',
+        seconds: 30,
+        speaker: 'Voce Narrante (HUB Scuola)',
+        text: 'Il legno è il tessuto vegetale che costituisce il fusto degli alberi. Sezionando un tronco riconosciamo la corteccia esterna protettiva, il libro, il cambio generatore e il legno vero e proprio: l\'alburno, più chiaro e giovane dove scorre la linfa grezza, e il durame, la parte centrale più compatta e resistente.',
+        keyConcept: 'Struttura anatomica del tronco'
+      },
+      {
+        time: '02:10',
+        seconds: 130,
+        speaker: 'Voce Narrante',
+        text: 'L\'abbattimento degli alberi da legname avviene principalmente d\'inverno. In questa stagione la pianta è in letargo vegetativo e i vasi legnosi contengono la minima quantità di linfa e umidità. Una volta abbattuto il tronco, i taglialegna procedono alla sramatura e alla scortecciatura.',
+        keyConcept: 'Perché si abbatte in inverno'
+      },
+      {
+        time: '04:05',
+        seconds: 245,
+        speaker: 'Voce Narrante',
+        text: 'I tronchi arrivano alla segheria tramite autocarri o fluitazione lungo i fiumi. Qui potenti seghe a nastro e circolari trasformano il tronco in semilavorati commerciali: travi, travetti, assi, tavole e panconi. Tuttavia il legno fresco contiene ancora fino al 50% di acqua.',
+        keyConcept: 'Segagione in segheria'
+      },
+      {
+        time: '06:15',
+        seconds: 375,
+        speaker: 'Voce Narrante',
+        text: 'Per evitare deformazioni e fessurazioni, il legno deve essere sottoposto a stagionatura. La stagionatura naturale all\'aria aperta richiede da diversi mesi fino a due o tre anni. Oggi si preferisce la stagionatura artificiale, in cui le tavole vengono essiccate in forni ad aria calda e ventilazione forzata in pochi giorni.',
+        keyConcept: 'Stagionatura naturale vs artificiale'
+      },
+      {
+        time: '07:30',
+        seconds: 450,
+        speaker: 'Voce Narrante',
+        text: 'Accanto al legno massello, l\'industria moderna produce molti semilavorati in pannelli. Il compensato e il multistrato sono formati da fogli sottili di legno incollati con il verso delle fibre incrociato a 90 gradi: in questo modo si compensa la tendenza naturale del legno a imbarcarsi. I pannelli MDF sono invece realizzati con finissime fibre di legno pressate.',
+        keyConcept: 'Pannelli compensati e MDF'
+      }
+    ],
+    edpuzzleQuestions: [
+      {
+        id: 'edp-legno-1',
+        timestampSeconds: 130,
+        timestampLabel: '02:10',
+        question: 'Per quale motivo il taglio degli alberi da legname si effettua preferibilmente durante la stagione invernale?',
+        options: [
+          'Perché c\'è meno traffico per i camion di trasporto',
+          'Perché la pianta è in letargo e contiene la minima quantità di linfa nei vasi',
+          'Perché il legno è congelato e più facile da spaccare',
+          'Perché gli alberi non hanno foglie e si vedono meglio'
+        ],
+        correctIndex: 1,
+        explanation: 'In inverno l\'albero è a riposo vegetativo, la linfa non scorre nei vasi e quindi il legno contiene meno umidità, riducendo i tempi di essiccazione.',
+        transcriptSnippet: 'In questa stagione la pianta è in letargo vegetativo e i vasi legnosi contengono la minima quantità di linfa e umidità.'
+      },
+      {
+        id: 'edp-legno-2',
+        timestampSeconds: 375,
+        timestampLabel: '06:15',
+        question: 'Qual è il vantaggio principale della stagionatura artificiale rispetto a quella naturale?',
+        options: [
+          'Costa meno della legna da ardere',
+          'Richiede solo pochi giorni in forni ad aria calda controllata invece di anni all\'aperto',
+          'Rende il legno trasparente come il vetro',
+          'Aumenta il peso del legname'
+        ],
+        correctIndex: 1,
+        explanation: 'La stagionatura artificiale essicca le tavole in pochi giorni in forni a circolazione forzata d\'aria calda, contro i mesi o anni di quella naturale.',
+        transcriptSnippet: 'Oggi si preferisce la stagionatura artificiale, in cui le tavole vengono essiccate in forni ad aria calda e ventilazione forzata in pochi giorni.'
+      },
+      {
+        id: 'edp-legno-3',
+        timestampSeconds: 450,
+        timestampLabel: '07:30',
+        question: 'Come sono orientate le fibre dei sottili fogli di legno (piallacci) che compongono un pannello di compensato?',
+        options: [
+          'Tutte rigorosamente parallele tra loro',
+          'Con il verso delle fibre orientato a 90° (ortogonale) l\'uno rispetto all\'altro',
+          'Disposte in diagonale a 45 gradi',
+          'Frantumate a polvere casuale'
+        ],
+        correctIndex: 1,
+        explanation: 'Incrociando le fibre a 90° si compensa e annulla la tendenza del legno a curvarsi e imbarcarsi con le variazioni di umidità.',
+        transcriptSnippet: 'Il compensato e il multistrato sono formati da fogli sottili di legno incollati con il verso delle fibre incrociato a 90 gradi: in questo modo si compensa la tendenza naturale del legno a imbarcarsi.'
+      }
     ],
     contentSnippet: 'Il legno è una risorsa rinnovabile purché gestita con silvicoltura sostenibile. I semilavorati in pannelli superano i limiti di imbarcamento del massello.'
   },
@@ -337,34 +534,89 @@ export const INITIAL_RESOURCES: MediaResource[] = [
     tags: ['Siderurgia', 'Altoforno', 'Ghisa', 'Acciaio', 'Laminatoio'],
     favorite: true,
     lessonTimestamps: [
-      { time: '00:45', note: 'Le materie prime: siderite, calcare fondente e carbone coke' },
-      { time: '02:20', note: 'Funzionamento della torre dell\'altoforno e recupero della ghisa' },
-      { time: '04:40', note: 'Conversione in acciaieria: riduzione del carbonio a < 2,06%' },
-      { time: '06:50', note: 'Colata continua in bramme e laminazione a caldo' }
+      { time: '00:45', note: 'I minerali di ferro e i componenti della carica (minerale, coke, calcare)' },
+      { time: '02:20', note: 'L\'altoforno a funzionamento ininterrotto e reazioni a 1800 °C' },
+      { time: '04:40', note: 'La ghisa grezza: elevato tenore di carbonio (> 2,06%) e fragilità' },
+      { time: '06:50', note: 'Convertitori a ossigeno LD per la decarburazione e trasformazione in acciaio' }
+    ],
+    transcript: [
+      {
+        time: '00:45',
+        seconds: 45,
+        speaker: 'Ingegneria Italia & HUB Scuola',
+        text: 'La siderurgia è il settore metallurgico che si occupa della produzione e lavorazione del ferro e delle sue leghe: ghisa e acciaio. Il ferro puro in natura è rarissimo; viene estratto da minerali come siderite, ematite e magnetite. Per liberare il ferro dall\'ossigeno è necessario l\'altoforno.',
+        keyConcept: 'Definizione di siderurgia'
+      },
+      {
+        time: '02:20',
+        seconds: 140,
+        speaker: 'Ingegneria Italia & HUB Scuola',
+        text: 'L\'altoforno è un\'imponente torre alta fino a 50 metri che lavora a ciclo continuo per molti anni senza mai spegnersi. Dall\'alto viene introdotta la carica, formata da strati alternati di minerale di ferro, fondente (calcare) e coke metallurgico. Dal basso viene soffiata aria caldissima a 1000 gradi che brucia il coke e porta le temperature a 1800 °C.',
+        keyConcept: 'La torre dell\'altoforno'
+      },
+      {
+        time: '04:40',
+        seconds: 280,
+        speaker: 'Ingegneria Italia & HUB Scuola',
+        text: 'Nel crogiolo sul fondo dell\'altoforno si raccoglie la ghisa fusa, mentre le impurità, chiamate scorie o loppa, galleggiano e vengono separate. La ghisa ottenuta contiene molto carbonio, oltre il 2,06%: per questo è un materiale duro ma molto fragile, che non può essere forgiato né saldato a caldo.',
+        keyConcept: 'Ghisa grezza e scorie'
+      },
+      {
+        time: '06:50',
+        seconds: 410,
+        speaker: 'Ingegneria Italia & HUB Scuola',
+        text: 'Oltre il 90% della ghisa fusa viene trasportata con carri siluro all\'acciaieria. Nei convertitori LD viene iniettato ossigeno puro ad altissima pressione: l\'ossigeno brucia il carbonio in eccesso portandolo al di sotto del 2,06%. Si ottiene così l\'acciaio, una lega tenace, elastica, saldabile e adatta alla laminazione.',
+        keyConcept: 'Conversione in acciaio nei forni LD'
+      }
+    ],
+    edpuzzleQuestions: [
+      {
+        id: 'edp-sid-1',
+        timestampSeconds: 140,
+        timestampLabel: '02:20',
+        question: 'Quali sono i tre ingredienti fondamentali introdotti dall\'alto nella torre dell\'altoforno?',
+        options: [
+          'Sabbia silicea, acqua e petrolio',
+          'Minerale di ferro, carbone coke e calcare (fondente)',
+          'Alluminio, rame e zolfo',
+          'Acciaio fuso, ossigeno e gesso'
+        ],
+        correctIndex: 1,
+        explanation: 'La carica dell\'altoforno è costituita da minerale ferroso, carbon coke che funge da combustibile e riducente, e calcare fondente che lega le impurità in scorie.',
+        transcriptSnippet: 'Dall\'alto viene introdotta la carica, formata da strati alternati di minerale di ferro, fondente (calcare) e coke metallurgico.'
+      },
+      {
+        id: 'edp-sid-2',
+        timestampSeconds: 280,
+        timestampLabel: '04:40',
+        question: 'Qual è la caratteristica chimica principale che distingue la ghisa dall\'acciaio?',
+        options: [
+          'La ghisa contiene piombo, l\'acciaio rame',
+          'La ghisa ha una percentuale di carbonio superiore al 2,06%, che la rende dura ma fragile',
+          'L\'acciaio non contiene ferro',
+          'La ghisa fonde a 3000 gradi e l\'acciaio a 100 gradi'
+        ],
+        correctIndex: 1,
+        explanation: 'La discriminante metallurgica fondamentale tra ghisa e acciaio è la percentuale di carbonio: sopra il 2,06% è ghisa, sotto il 2,06% è acciaio.',
+        transcriptSnippet: 'La ghisa ottenuta contiene molto carbonio, oltre il 2,06%: per questo è un materiale duro ma molto fragile...'
+      },
+      {
+        id: 'edp-sid-3',
+        timestampSeconds: 410,
+        timestampLabel: '06:50',
+        question: 'Nei convertitori LD dell\'acciaieria, cosa viene insufflato nella ghisa fusa per trasformarla in acciaio?',
+        options: [
+          'Acqua fredda nebulizzata',
+          'Ossigeno puro ad alta pressione per bruciare il carbonio in eccesso',
+          'Gas metano',
+          'Polvere di pietra pomice'
+        ],
+        correctIndex: 1,
+        explanation: 'L\'ossigeno puro si combina chimicamente con il carbonio della ghisa formando CO2, abbattendo la concentrazione di carbonio fino a raggiungere l\'acciaio.',
+        transcriptSnippet: 'Nei convertitori LD viene iniettato ossigeno puro ad altissima pressione: l\'ossigeno brucia il carbonio in eccesso portandolo al di sotto del 2,06%.'
+      }
     ],
     contentSnippet: 'L\'acciaio è una lega di ferro e carbonio altamente riciclabile all\'infinito nei forni elettrici tramite la rifusione dei rottami metallici.'
-  },
-  {
-    id: 'res-yt-plastica-riciclo',
-    title: 'Materie Plastiche: Sintesi dai Polimeri, Termoformatura e Riciclo',
-    type: 'video',
-    area: 'Materiali & Risorse',
-    gradeLevel: '1ª Media',
-    durationOrPages: '7:50 min',
-    channelName: 'Corepla & Geopop Edu',
-    youtubeId: 'mVDKU3Axduk',
-    mediaUrl: 'https://www.youtube-nocookie.com/embed/mVDKU3Axduk',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=400&q=80',
-    description: 'Dal petrolio ai granuli di resina termoplastica: processi di stampaggio per iniezione, estrusione in bolla delle pellicole e ciclo di riciclaggio meccanico delle bottiglie in PET e flaconi HDPE.',
-    tags: ['Plastica', 'Polimeri', 'Riciclo', 'Termoplastiche', 'Corepla'],
-    favorite: false,
-    lessonTimestamps: [
-      { time: '00:50', note: 'Monomeri e polimerizzazione: macromolecole a catena' },
-      { time: '02:30', note: 'Differenza tra resine termoplastiche (TP) e termoindurenti (TI)' },
-      { time: '04:15', note: 'Formatura: estrusione, stampaggio a iniezione e soffiaggio flaconi' },
-      { time: '06:00', note: 'Impianto di selezione e riciclo in scaglie per nuova materia prima' }
-    ],
-    contentSnippet: 'Il 95% dei rifiuti galleggianti nei mari è plastica: differenziare e ridurre gli imballaggi usa-e-getta è una priorità di cittadinanza attiva.'
   },
   {
     id: 'res-yt-squadratura-f4',
@@ -373,19 +625,103 @@ export const INITIAL_RESOURCES: MediaResource[] = [
     area: 'Disegno Tecnico',
     gradeLevel: '1ª Media',
     durationOrPages: '5:30 min',
-    channelName: 'Prof. Falanga insegna',
-    youtubeId: 'RnVA2RTTnYE',
-    mediaUrl: 'https://www.youtube-nocookie.com/embed/RnVA2RTTnYE',
+    channelName: 'HUB Scuola',
+    youtubeId: 'R9j0qP1fW1Q',
+    mediaUrl: 'https://www.youtube-nocookie.com/embed/R9j0qP1fW1Q',
     thumbnailUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=400&q=80',
     description: 'Video tutorial per alunni di prima media: impostazione della tavola da disegno, tracciamento diagonali con matita 2H leggera, 4 archi di compasso con apertura fissa di 9 cm, cornice marcata con HB e riquadro cartiglio.',
     tags: ['Squadratura', 'Foglio F4', 'Compasso 9cm', 'Disegno Tecnico'],
     favorite: true,
     lessonTimestamps: [
-      { time: '00:15', note: 'Fissare il foglio con nastro adesivo di carta' },
-      { time: '01:10', note: 'Tracciare le due diagonali con matita 2H leggerissima' },
-      { time: '02:30', note: 'Puntare al centro O con apertura compasso 90 mm' },
-      { time: '03:45', note: 'Archi dai punti 1, 2, 3, 4 per la cornice perimetrale' },
-      { time: '04:50', note: 'Ripasso a tratto forte HB e tracciamento assi mediani' }
+      { time: '00:15', note: 'Fissare il foglio F4 al tavolo con nastro di carta' },
+      { time: '01:10', note: 'Tracciamento delle due diagonali leggere con matita 2H per trovare il centro O' },
+      { time: '02:30', note: 'Apertura compasso fissa r = 90 mm e tracciamento dei 4 archetti 1, 2, 3, 4' },
+      { time: '03:45', note: 'Archi dai quattro punti di intersezione verso i bordi' },
+      { time: '04:50', note: 'Ripasso della cornice con matita HB marcata e riquadro intestazione' }
+    ],
+    transcript: [
+      {
+        time: '00:15',
+        seconds: 15,
+        speaker: 'Prof. Falanga',
+        text: 'Oggi vediamo la squadratura del foglio da disegno F4 liscio. Fissiamo con cura i quattro angoli con del nastro carta da carrozziere per non strappare il foglio al termine.',
+        keyConcept: 'Posizionamento del foglio'
+      },
+      {
+        time: '01:10',
+        seconds: 70,
+        speaker: 'Prof. Falanga',
+        text: 'Prendiamo la riga da 50 o 60 cm e con la matita 2H ben temperata colleghiamo gli spigoli opposti tracciando le due diagonali. Il tratto deve essere leggerissimo, appena percettibile. Il punto di incontro al centro è l\'origine O.',
+        keyConcept: 'Diagonali 2H e centro O'
+      },
+      {
+        time: '02:30',
+        seconds: 150,
+        speaker: 'Prof. Falanga',
+        text: 'Prendiamo il compasso balaustrone e regoliamo l\'apertura a esattamente 9 centimetri sulla riga. Puntiamo l\'ago metallico nel centro O e tracciamo quattro archetti sulle diagonali, numerando i punti 1, 2, 3 e 4.',
+        keyConcept: 'Compasso ad apertura 9 cm'
+      },
+      {
+        time: '03:45',
+        seconds: 225,
+        speaker: 'Prof. Falanga',
+        text: 'Mantenendo rigorosamente la stessa apertura di 9 cm, puntiamo prima nel punto 1 e tracciamo due archetti in alto e a sinistra; ripetiamo per 2, 3 e 4. I punti in cui gli archi si intersecano definiscono gli spigoli della nostra cornice perimetrale.',
+        keyConcept: 'Intersezioni perimetrali'
+      },
+      {
+        time: '04:50',
+        seconds: 290,
+        speaker: 'Prof. Falanga',
+        text: 'Ora cambiamo matita: prendiamo la matita HB e con la riga uniamo i punti ottenuti tracciando le 4 linee della cornice con un tratto continuo forte, pulito e marcato. Concludiamo con gli assi mediani e il cartiglio in basso.',
+        keyConcept: 'Cornice definitiva HB e cartiglio'
+      }
+    ],
+    edpuzzleQuestions: [
+      {
+        id: 'edp-sq-1',
+        timestampSeconds: 70,
+        timestampLabel: '01:10',
+        question: 'Quale tipo di matita si deve adoperare per tracciare le diagonali iniziali della squadratura?',
+        options: [
+          'Matita 2B morbida e scura',
+          'Matita 2H a punta fine con tratto leggero',
+          'Pennarello nero indelebile',
+          'Matita colorata rossa'
+        ],
+        correctIndex: 1,
+        explanation: 'Le linee di costruzione devono essere sottilissime e facili da cancellare senza lasciare solchi sulla carta, quindi si usa la matita dura 2H.',
+        transcriptSnippet: 'Prendiamo la riga da 50 o 60 cm e con la matita 2H ben temperata colleghiamo gli spigoli opposti... Il tratto deve essere leggerissimo...'
+      },
+      {
+        id: 'edp-sq-2',
+        timestampSeconds: 150,
+        timestampLabel: '02:30',
+        question: 'Qual è l\'apertura standard del compasso consigliata per eseguire la squadratura sul foglio F4?',
+        options: [
+          'Esattamente 2 centimetri',
+          'Esattamente 9 centimetri (90 mm)',
+          'Tutta l\'apertura massima possibile',
+          '15 millimetri'
+        ],
+        correctIndex: 1,
+        explanation: 'L\'apertura canonica di 9 cm (90 mm) garantisce una cornice proporzionata rispetto alle dimensioni standard del foglio F4 (24 x 33 cm).',
+        transcriptSnippet: 'Prendiamo il compasso balaustrone e regoliamo l\'apertura a esattamente 9 centimetri sulla riga...'
+      },
+      {
+        id: 'edp-sq-3',
+        timestampSeconds: 290,
+        timestampLabel: '04:50',
+        question: 'Con quale gradazione di matita si deve ripassare la linea definitiva della cornice perimetrale squadrata?',
+        options: [
+          'Matita 3H durissima',
+          'Matita HB a tratto continuo forte e marcato',
+          'Gessetto bianco',
+          'Solo a china liquida'
+        ],
+        correctIndex: 1,
+        explanation: 'Le linee definitive visibili a norma UNI si ripassano con matita media (HB) a tratto marcato e uniforme.',
+        transcriptSnippet: 'Ora cambiamo matita: prendiamo la matita HB e con la riga uniamo i punti ottenuti tracciando le 4 linee della cornice con un tratto continuo forte...'
+      }
     ],
     contentSnippet: 'La squadratura prepara il campo grafico e garantisce ortogonalità perfetta alle linee di base della tavola.'
   },
@@ -404,12 +740,188 @@ export const INITIAL_RESOURCES: MediaResource[] = [
     tags: ['Idroelettrico', 'Diga', 'Turbina Pelton', 'Alternatore', 'Energia Rinnovabile'],
     favorite: true,
     lessonTimestamps: [
-      { time: '01:00', note: 'Il bacino di accumulo e il dislivello geodetico montano' },
-      { time: '02:40', note: 'Pressione idrostatica e condotta forzata' },
-      { time: '04:30', note: 'Funzionamento della girante della turbina Pelton con ugelli' },
-      { time: '06:10', note: 'L\'alternatore: conversione in elettricità e scarico a valle' }
+      { time: '01:00', note: 'Il bacino di accumulo montano e la diga di sbarramento' },
+      { time: '02:40', note: 'La condotta forzata: conversione da energia potenziale a cinetica' },
+      { time: '04:30', note: 'Funzionamento della girante della turbina Pelton con doppi cucchiai e ugelli' },
+      { time: '06:10', note: 'L\'alternatore sincrono a 50 Hz e trasformazione in elettricità' }
+    ],
+    transcript: [
+      {
+        time: '01:00',
+        seconds: 60,
+        speaker: 'Ingegneria Italia',
+        text: 'Nelle centrali idroelettriche a salto o a deflusso regolato, l\'acqua di fiumi e torrenti viene bloccata ad alta quota da una diga, creando un bacino montano artificiale. In questo bacino l\'acqua immagazzina energia potenziale gravitazionale proporzionale all\'altezza del salto.',
+        keyConcept: 'Energia potenziale e diga'
+      },
+      {
+        time: '02:40',
+        seconds: 160,
+        speaker: 'Ingegneria Italia',
+        text: 'Attraverso un\'opera di presa, l\'acqua viene incanalata in una condotta forzata in acciaio o cemento armato che scende ripida a valle. Lungo la caduta l\'energia potenziale si trasforma in energia cinetica e l\'acqua raggiunge pressioni elevate, spesso superiori a decine di bar.',
+        keyConcept: 'Condotta forzata e pressione'
+      },
+      {
+        time: '04:30',
+        seconds: 270,
+        speaker: 'Ingegneria Italia',
+        text: 'All\'arrivo nella centrale, l\'acqua fuoriesce ad altissima velocità da ugelli conici dotati di spillo regolatore Doble e colpisce le pale a forma di doppio cucchiaio della turbina Pelton. La forza dell\'acqua mette in rapidissima rotazione l\'albero motore meccanico.',
+        keyConcept: 'Turbina Pelton a cucchiai'
+      },
+      {
+        time: '06:10',
+        seconds: 370,
+        speaker: 'Ingegneria Italia',
+        text: 'L\'albero della turbina è collegato direttamente all\'alternatore, composto da rotore magnetico e statore con bobine di rame. Attraverso l\'induzione elettromagnetica l\'energia meccanica di rotazione viene convertita in energia elettrica a corrente alternata a 50 Hertz.',
+        keyConcept: 'Alternatore e induzione magnetica'
+      }
+    ],
+    edpuzzleQuestions: [
+      {
+        id: 'edp-idro-1',
+        timestampSeconds: 160,
+        timestampLabel: '02:40',
+        question: 'Quale trasformazione di energia avviene mentre l\'acqua precipita lungo la condotta forzata verso valle?',
+        options: [
+          'Energia nucleare si trasforma in energia solare',
+          'L\'energia potenziale gravitazionale si trasforma in energia cinetica e pressione',
+          'Energia chimica in energia termica',
+          'L\'acqua perde energia e rallenta'
+        ],
+        correctIndex: 1,
+        explanation: 'La caduta nel dislivello trasforma l\'energia potenziale di quota in energia cinetica di movimento ad altissima velocità e pressione.',
+        transcriptSnippet: 'Lungo la caduta l\'energia potenziale si trasforma in energia cinetica e l\'acqua raggiunge pressioni elevate...'
+      },
+      {
+        id: 'edp-idro-2',
+        timestampSeconds: 270,
+        timestampLabel: '04:30',
+        question: 'Quale forma caratteristica hanno le pale della turbina Pelton, tipicamente impiegata nei grandi salti alpini?',
+        options: [
+          'Pale piatte elicoidali come quelle di un ventilatore',
+          'Pale a forma di doppio cucchiaio con tagliamare centrale',
+          'Pale a elica orientabile di nave',
+          'Una ruota dentata per ingranaggi'
+        ],
+        correctIndex: 1,
+        explanation: 'Le pale Pelton sono conformate a doppio cucchiaio per dividere il getto d\'acqua e sfruttarne tutta la spinta per reazione dinamica.',
+        transcriptSnippet: '...colpisce le pale a forma di doppio cucchiaio della turbina Pelton. La forza dell\'acqua mette in rapidissima rotazione l\'albero motore...'
+      },
+      {
+        id: 'edp-idro-3',
+        timestampSeconds: 370,
+        timestampLabel: '06:10',
+        question: 'Quale macchina converte la rotazione meccanica della turbina in corrente elettrica alternata?',
+        options: [
+          'Il compressore volumetrico',
+          'L\'alternatore (generatore sincrono)',
+          'La caldaia a vapore',
+          'Il contatore del gas'
+        ],
+        correctIndex: 1,
+        explanation: 'L\'alternatore sfrutta l\'induzione elettromagnetica scoperta da Faraday per generare corrente alternata a partire dal moto rotatorio.',
+        transcriptSnippet: 'L\'albero della turbina è collegato direttamente all\'alternatore... Attraverso l\'induzione elettromagnetica l\'energia meccanica di rotazione viene convertita in energia elettrica...'
+      }
     ],
     contentSnippet: 'Le centrali idroelettriche a salto fungono anche da accumulatori di energia tramite il pompaggio dell\'acqua nelle ore notturne.'
+  },
+  {
+    id: 'res-yt-corrente-elettrica',
+    title: 'La Corrente Elettrica, Tensione e la Legge di Ohm (V = I · R)',
+    type: 'video',
+    area: 'Elettricità & Elettronica',
+    gradeLevel: '3ª Media',
+    durationOrPages: '8:10 min',
+    channelName: 'Tecnologia Duepuntozero',
+    youtubeId: 'kYqg1kKjV9A',
+    mediaUrl: 'https://www.youtube-nocookie.com/embed/kYqg1kKjV9A',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?auto=format&fit=crop&w=400&q=80',
+    description: 'Il flusso degli elettroni liberi nei conduttori. Definizione rigorosa di Tensione (Volt), Intensità di corrente (Ampere) e Resistenza (Ohm). Esercizi pratici di calcolo con formule inverse e circuiti in serie e parallelo.',
+    tags: ['Elettricità', 'Legge di Ohm', 'Circuiti', 'Ampere', 'Volt'],
+    favorite: true,
+    lessonTimestamps: [
+      { time: '01:00', note: 'La struttura dell\'atomo e gli elettroni di valenza liberi di muoversi' },
+      { time: '02:30', note: 'Le 3 grandezze: Tensione V (Volt), Intensità I (Ampere), Resistenza R (Ohm)' },
+      { time: '04:15', note: 'La prima Legge di Ohm (V = I * R) e il triangolo delle formule inverse' },
+      { time: '06:20', note: 'Circuiti in serie vs parallelo e caduta di tensione' }
+    ],
+    transcript: [
+      {
+        time: '01:00',
+        seconds: 60,
+        speaker: 'Tecnologia Duepuntozero',
+        text: 'Tutta la materia è formata da atomi. Nei metalli come il rame, gli elettroni più esterni dell\'atomo sono debolmente legati al nucleo e possono muoversi liberamente: sono gli elettroni di conduzione. Quando applichiamo un generatore, questi elettroni si spostano in modo ordinato dal polo negativo verso il polo positivo.',
+        keyConcept: 'Flusso di elettroni'
+      },
+      {
+        time: '02:30',
+        seconds: 150,
+        speaker: 'Tecnologia Duepuntozero',
+        text: 'Per capire un circuito dobbiamo conoscere tre grandezze: la Tensione (V), misurata in Volt, che è la differenza di potenziale o spinta elettrica; l\'Intensità (I), misurata in Ampere, cioè quanti coulomb di elettroni passano al secondo; e la Resistenza (R), misurata in Ohm, cioè l\'ostacolo che il materiale oppone al passaggio della corrente.',
+        keyConcept: 'Volt, Ampere e Ohm'
+      },
+      {
+        time: '04:15',
+        seconds: 255,
+        speaker: 'Tecnologia Duepuntozero',
+        text: 'Nel 1827 il fisico George Simon Ohm scoprì la fondamentale relazione matematica: V = I moltiplicato per R. Questo significa che a parità di resistenza, raddoppiando la tensione raddoppierà anche la corrente. Con le formule inverse calcoliamo: I = V diviso R, oppure R = V diviso I.',
+        keyConcept: 'Formula di Ohm e formule inverse'
+      },
+      {
+        time: '06:20',
+        seconds: 380,
+        speaker: 'Tecnologia Duepuntozero',
+        text: 'Nei circuiti con carichi in serie la corrente è identica in tutti i punti: se una lampada si fulmina, l\'intero circuito si interrompe. Nelle nostre case gli impianti sono invece collegati tutti in parallelo: ogni elettrodomestico riceve la tensione di 230 Volt indipendentemente dagli altri.',
+        keyConcept: 'Serie vs Parallelo nelle abitazioni'
+      }
+    ],
+    edpuzzleQuestions: [
+      {
+        id: 'edp-ohm-1',
+        timestampSeconds: 150,
+        timestampLabel: '02:30',
+        question: 'Quale unità di misura corrisponde all\'ostacolo che un conduttore oppone al passaggio della corrente elettrica?',
+        options: [
+          'Volt (V)',
+          'Ohm (Ω)',
+          'Ampere (A)',
+          'Watt (W)'
+        ],
+        correctIndex: 1,
+        explanation: 'La Resistenza elettrica, ovvero la tendenza di un materiale a ostacolare il flusso di elettroni, si misura in Ohm (Ω).',
+        transcriptSnippet: '...e la Resistenza (R), misurata in Ohm, cioè l\'ostacolo che il materiale oppone al passaggio della corrente.'
+      },
+      {
+        id: 'edp-ohm-2',
+        timestampSeconds: 255,
+        timestampLabel: '04:15',
+        question: 'Se la tensione della presa domestica è 230 V e colleghiamo un resistore da 46 Ohm, quanta corrente I (Ampere) scorrerà?',
+        options: [
+          '230 * 46 = 10580 A',
+          'I = V / R = 230 / 46 = 5 Ampere',
+          '0,2 Ampere',
+          '46 Ampere'
+        ],
+        correctIndex: 1,
+        explanation: 'Applicando la formula inversa I = V / R: 230 diviso 46 dà esattamente 5 Ampere.',
+        transcriptSnippet: 'Con le formule inverse calcoliamo: I = V diviso R, oppure R = V diviso I.'
+      },
+      {
+        id: 'edp-ohm-3',
+        timestampSeconds: 380,
+        timestampLabel: '06:20',
+        question: 'Perché gli impianti elettrici delle abitazioni sono realizzati con collegamenti in PARALLELO e non in serie?',
+        options: [
+          'Perché i cavi in serie costano troppo',
+          'Perché in parallelo tutti gli elettrodomestici ricevono la stessa tensione (230V) e funzionano indipendentemente',
+          'Perché in serie la corrente sarebbe troppo veloce',
+          'Perché in parallelo non serve l\'interruttore salvavita'
+        ],
+        correctIndex: 1,
+        explanation: 'In parallelo ogni presa e lampadario può essere acceso o spento senza interrompere l\'alimentazione degli altri apparecchi, e tutti ricevono 230V.',
+        transcriptSnippet: 'Nelle nostre case gli impianti sono invece collegati tutti in parallelo: ogni elettrodomestico riceve la tensione di 230 Volt indipendentemente dagli altri.'
+      }
+    ],
+    contentSnippet: 'La legge di Ohm formulata nel 1827 governa tutti i circuiti elettrici: all\'aumentare della tensione la corrente cresce, all\'aumentare della resistenza diminuisce.'
   },
   {
     id: 'res-yt-fotovoltaico-silicio',
@@ -426,10 +938,72 @@ export const INITIAL_RESOURCES: MediaResource[] = [
     tags: ['Fotovoltaico', 'Silicio', 'Inverter', 'Sole', 'Transizione Ecologica'],
     favorite: true,
     lessonTimestamps: [
-      { time: '00:45', note: 'I fotoni della luce solare e gli atomi di silicio' },
-      { time: '02:15', note: 'Giunzione P-N drogata con fosforo e boro' },
-      { time: '03:50', note: 'Dalla singola cella al modulo fotovoltaico' },
-      { time: '05:20', note: 'L\'inverter: trasformare la corrente da continua ad alternata' }
+      { time: '00:45', note: 'I fotoni della luce solare e le proprietà del silicio semiconduttore' },
+      { time: '02:15', note: 'Il drogaggio con boro e fosforo: la giunzione P-N' },
+      { time: '03:50', note: 'Dalla singola cella al modulo e pannello' },
+      { time: '05:20', note: 'L\'inverter: trasformazione da corrente continua (CC) ad alternata (CA)' }
+    ],
+    transcript: [
+      {
+        time: '00:45',
+        seconds: 45,
+        speaker: 'Geopop Edu',
+        text: 'La luce del Sole è composta da particelle di energia chiamate fotoni. Quando questi fotoni colpiscono un materiale semiconduttore come il silicio, trasferiscono la loro energia agli elettroni, liberandoli dai loro atomi: questo è l\'effetto fotoelettrico scoperto da Einstein.',
+        keyConcept: 'Fotoni ed effetto fotoelettrico'
+      },
+      {
+        time: '02:15',
+        seconds: 135,
+        speaker: 'Geopop Edu',
+        text: 'Per far sì che gli elettroni liberati si muovano tutti nella stessa direzione creando una corrente, il silicio viene "drogato", cioè arricchito con impurità chimiche: da un lato atomi di fosforo (strato N ricco di cariche negative), dall\'altro atomi di boro (strato P ricco di cariche positive). Tra i due strati si crea un campo elettrico permanente.',
+        keyConcept: 'Drogaggio e giunzione P-N'
+      },
+      {
+        time: '03:50',
+        seconds: 230,
+        speaker: 'Geopop Edu',
+        text: 'Una singola cella fotovoltaica eroga circa 0,5 Volt. Collegando in serie e in parallelo 60 o 72 celle su un telaio di alluminio protetto da vetro temperato si ottiene il modulo fotovoltaico, capace di erogare centinaia di Watt.',
+        keyConcept: 'Composizione del pannello'
+      },
+      {
+        time: '05:20',
+        seconds: 320,
+        speaker: 'Geopop Edu',
+        text: 'La corrente prodotta dal pannello è corrente continua (DC). Nelle nostre case gli elettrodomestici funzionano invece a corrente alternata a 230 Volt. Per questo è fondamentale l\'inverter: una macchina elettronica che converte la corrente continua in alternata a 50 Hz, consentendo sia l\'uso domestico sia l\'immissione dell\'energia in eccesso nella rete elettrica nazionale.',
+        keyConcept: 'Il ruolo cruciale dell\'inverter'
+      }
+    ],
+    edpuzzleQuestions: [
+      {
+        id: 'edp-fv-1',
+        timestampSeconds: 135,
+        timestampLabel: '02:15',
+        question: 'Cosa si intende per "drogaggio" del silicio nelle celle fotovoltaiche?',
+        options: [
+          'La verniciatura superficiale della lastra di silicio',
+          'L\'inserimento intenzionale di atomi di boro e fosforo per creare cariche positive e negative',
+          'Il lavaggio con solventi chimici tossici',
+          'Il raffreddamento istantaneo in azoto liquido'
+        ],
+        correctIndex: 1,
+        explanation: 'Il drogaggio crea il dislivello elettrico (giunzione P-N) che spinge gli elettroni mossi dalla luce a fluire come corrente.',
+        transcriptSnippet: '...il silicio viene "drogato", cioè arricchito con impurità chimiche: da un lato atomi di fosforo... dall\'altro atomi di boro...'
+      },
+      {
+        id: 'edp-fv-2',
+        timestampSeconds: 320,
+        timestampLabel: '05:20',
+        question: 'Qual è il compito indispensabile dell\'inverter in un impianto fotovoltaico domestico?',
+        options: [
+          'Riscaldare l\'acqua per il riscaldamento a pavimento',
+          'Convertire la corrente continua (DC) prodotta dai pannelli in corrente alternata (AC) a 230V',
+          'Orientare i pannelli solari verso il vento',
+          'Misurare la quantità di polvere sul vetro'
+        ],
+        correctIndex: 1,
+        explanation: 'I pannelli generano corrente continua; l\'inverter la trasforma in corrente alternata a 230V / 50 Hz utilizzabile dagli elettrodomestici di casa.',
+        transcriptSnippet: 'Per questo è fondamentale l\'inverter: una macchina elettronica che converte la corrente continua in alternata a 50 Hz...'
+      }
     ],
     contentSnippet: 'L\'energia solare fotovoltaica permette l\'autoconsumo e trasforma i consumatori in "prosumer" (produttori-consumatori).'
   },
@@ -448,34 +1022,158 @@ export const INITIAL_RESOURCES: MediaResource[] = [
     tags: ['Cemento Armato', 'Telaio', 'Pilastri', 'Travi', 'Antisismica'],
     favorite: false,
     lessonTimestamps: [
-      { time: '00:50', note: 'Il calcestruzzo romano e l\'evoluzione moderna' },
-      { time: '02:20', note: 'Comportamento meccanico: calcestruzzo a compressione, acciaio a trazione' },
-      { time: '04:10', note: 'I ferri piegati e le staffe di armatura' },
-      { time: '05:50', note: 'La struttura a telaio continuo: pilastri, travi e solai' }
+      { time: '00:50', note: 'I limiti della pietra e l\'invenzione del calcestruzzo moderno' },
+      { time: '02:20', note: 'Le sollecitazioni meccaniche: calcestruzzo a compressione, acciaio a trazione' },
+      { time: '04:10', note: 'L\'armatura metallica con tondini sagomati e staffe antisismiche' },
+      { time: '05:50', note: 'La struttura a telaio continuo in cantiere: pilastri, travi e solai' }
     ],
-    contentSnippet: 'Il C.A. ha consentito di alleggerire le pareti: i muri perimetrali diventano semplici tamponamenti isolanti privi di funzione portante.'
+    transcript: [
+      {
+        time: '00:50',
+        seconds: 50,
+        speaker: 'Ingegneria Edile Didattica',
+        text: 'Nelle costruzioni antiche in pietra (come il sistema trilitico) le travi non potevano superare grandi luci perché la pietra, sottoposta a flessione, si spezzava sul lato inferiore. All\'inizio del Novecento la tecnologia delle costruzioni è stata rivoluzionata da un nuovo materiale composito: il calcestruzzo armato.',
+        keyConcept: 'Origine del cemento armato'
+      },
+      {
+        time: '02:20',
+        seconds: 140,
+        speaker: 'Ingegneria Edile Didattica',
+        text: 'Il calcestruzzo (miscela di cemento, sabbia, ghiaia e acqua) possiede un\'altissima resistenza alla compressione, ma ha una debolissima resistenza alla trazione. Quando una trave è caricata dall\'alto, la parte superiore viene compressa mentre la parte inferiore viene tirata (tesa). Inserendo tondini d\'acciaio sul fondo della trave, l\'acciaio si fa carico della trazione impedendo il crollo.',
+        keyConcept: 'Compressione e Trazione'
+      },
+      {
+        time: '04:10',
+        seconds: 250,
+        speaker: 'Ingegneria Edile Didattica',
+        text: 'I tondini d\'acciaio sono nervati per aderire perfettamente al calcestruzzo e vengono legati con anelli detti staffe, che impediscono lo scorrimento dei ferri e contrastano le forze di taglio e le sollecitazioni sismiche.',
+        keyConcept: 'Staffe e aderenza acciaio-calcestruzzo'
+      },
+      {
+        time: '05:50',
+        seconds: 350,
+        speaker: 'Ingegneria Edile Didattica',
+        text: 'In cantiere, il calcestruzzo viene gettato liquido dentro casseforme di legno o metallo dove è già stata posata la gabbia d\'acciaio. Con la vibrazione meccanica si eliminano le bolle d\'aria. Nasce così la moderna struttura a telaio, in cui il peso dell\'edificio è retto solo da travi e pilastri.',
+        keyConcept: 'Getto in cantiere e struttura a telaio'
+      }
+    ],
+    edpuzzleQuestions: [
+      {
+        id: 'edp-ca-1',
+        timestampSeconds: 140,
+        timestampLabel: '02:20',
+        question: 'In una trave in calcestruzzo armato soggetta a flessione da un carico soprastante, dove deve essere posizionata l\'armatura in acciaio?',
+        options: [
+          'Solo sul lato superiore compresso',
+          'Nella parte inferiore della trave, dove la struttura è tesa ed esposta a trazione',
+          'Fuori dall\'edificio sul tetto',
+          'Non importa, basta che ci sia ferro in qualsiasi posizione'
+        ],
+        correctIndex: 1,
+        explanation: 'La trave inflessa tende ad aprirsi sul bordo inferiore (teso); l\'armatura d\'acciaio va posizionata esattamente lì per assorbire la trazione.',
+        transcriptSnippet: 'Inserendo tondini d\'acciaio sul fondo della trave, l\'acciaio si fa carico della trazione impedendo il crollo.'
+      },
+      {
+        id: 'edp-ca-2',
+        timestampSeconds: 350,
+        timestampLabel: '05:50',
+        question: 'In un edificio moderno costruito con struttura a telaio in cemento armato, quale funzione svolgono le pareti perimetrali?',
+        options: [
+          'Funzione portante indispensabile: reggono il peso dei piani superiori',
+          'Semplice funzione di tamponamento e isolamento termo-acustico, senza reggere carichi',
+          'Sostengono le fondamenta',
+          'Servono solo per decorazione'
+        ],
+        correctIndex: 1,
+        explanation: 'Nel sistema a telaio il carico è sostenuto interamente da pilastri e travi; i muri esterni sono detti di tamponamento e non hanno funzione portante.',
+        transcriptSnippet: 'Nasce così la moderna struttura a telaio, in cui il peso dell\'edificio è retto solo da travi e pilastri.'
+      }
+    ],
+    contentSnippet: 'Il calcestruzzo resiste egregiamente a compressione ma cede a trazione; i tondini d\'acciaio assorbono la trazione. Insieme creano un materiale composito resistente e monolitico.'
   },
   {
-    id: 'res-yt-corrente-elettrica',
-    title: 'La Corrente Elettrica, Tensione e la Legge di Ohm (V = I · R)',
+    id: 'res-yt-plastica-riciclo',
+    title: 'Materie Plastiche: Sintesi dai Polimeri, Termoformatura e Riciclo',
     type: 'video',
-    area: 'Elettricità & Elettronica',
-    gradeLevel: '3ª Media',
-    durationOrPages: '8:10 min',
-    channelName: 'Tecnologia Duepuntozero & HUB Scuola',
-    youtubeId: 's66Zt2rS5lU',
-    mediaUrl: 'https://www.youtube-nocookie.com/embed/s66Zt2rS5lU',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?auto=format&fit=crop&w=400&q=80',
-    description: 'Il flusso degli elettroni liberi nei conduttori. Definizione rigorosa di Tensione (Volt), Intensità di corrente (Ampere) e Resistenza (Ohm). Esercizi pratici di calcolo con formule inverse e circuiti in serie e parallelo.',
-    tags: ['Elettricità', 'Legge di Ohm', 'Circuiti', 'Ampere', 'Volt'],
-    favorite: true,
+    area: 'Materiali & Risorse',
+    gradeLevel: '1ª Media',
+    durationOrPages: '7:50 min',
+    channelName: 'Corepla & Geopop Edu',
+    youtubeId: 'mVDKU3Axduk',
+    mediaUrl: 'https://www.youtube-nocookie.com/embed/mVDKU3Axduk',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=400&q=80',
+    description: 'Dal petrolio ai granuli di resina termoplastica: processi di stampaggio per iniezione, estrusione in bolla delle pellicole e ciclo di riciclaggio meccanico delle bottiglie in PET e flaconi HDPE.',
+    tags: ['Plastica', 'Polimeri', 'Riciclo', 'Termoplastiche', 'Corepla'],
+    favorite: false,
     lessonTimestamps: [
-      { time: '01:00', note: 'Cos\'è la corrente elettrica: movimento di elettroni' },
-      { time: '02:30', note: 'I tre parametri: Volt, Ampere e Ohm' },
-      { time: '04:15', note: 'La prima Legge di Ohm: V = I * R e formule inverse' },
-      { time: '06:20', note: 'Collegamento in serie e parallelo con esempi domestici' }
+      { time: '00:50', note: 'I monomeri e la polimerizzazione: catene macromolecolari' },
+      { time: '02:30', note: 'Resine termoplastiche (riciclabili col calore) vs termoindurenti' },
+      { time: '04:15', note: 'Le tecniche di formatura: estrusione in bolla e stampaggio a iniezione' },
+      { time: '06:00', note: 'L\'impianto di riciclo: selezione ottica, lavaggio e scaglie MPS' }
     ],
-    contentSnippet: 'La legge di Ohm formulata nel 1827 governa tutti i circuiti elettrici: all\'aumentare della tensione la corrente cresce, all\'aumentare della resistenza diminuisce.'
+    transcript: [
+      {
+        time: '00:50',
+        seconds: 50,
+        speaker: 'Corepla & Geopop Edu',
+        text: 'La plastica è una famiglia vastissima di materiali sintetici ottenuti per lo più dalla raffinazione del petrolio greggio. Attraverso il cracking termico si ricavano molecole semplici chiamate monomeri, come l\'etilene o il propilene. Con la reazione di polimerizzazione questi monomeri si legano in lunghe catene chiamate polimeri.',
+        keyConcept: 'Monomeri e polimeri'
+      },
+      {
+        time: '02:30',
+        seconds: 150,
+        speaker: 'Corepla & Geopop Edu',
+        text: 'Le plastiche si dividono in due grandi gruppi: le resine termoplastiche (come PET, PE, PVC, polistirolo), che con il calore si ammorbidiscono e possono essere rimodellate più volte; e le resine termoindurenti (come bachelite e melammina), che una volta indurite non possono più essere rifuse. Per questo le termoplastiche sono ideali per il riciclo.',
+        keyConcept: 'Termoplastiche vs Termoindurenti'
+      },
+      {
+        time: '04:15',
+        seconds: 255,
+        speaker: 'Corepla & Geopop Edu',
+        text: 'Per produrre i sacchetti o pellicole si usa l\'estrusione in bolla, insufflando aria compressa nel tubo di plastica fuso; per i flaconi si usa il soffiaggio in stampi; per piatti e vaschette si impiega lo stampaggio a iniezione o la termoformatura sotto vuoto.',
+        keyConcept: 'Lavorazioni industriali'
+      },
+      {
+        time: '06:00',
+        seconds: 360,
+        speaker: 'Corepla & Geopop Edu',
+        text: 'Negli impianti di riciclo le plastiche raccolte in differenziata vengono separate per tipo e colore con sensori ottici a raggi infrarossi. Vengono quindi tritate in scaglie, lavate, essiccate ed estruse in granuli rigenerati: le materie prime seconde, pronte per fabbricare nuovi oggetti.',
+        keyConcept: 'Il riciclo meccanico delle plastiche'
+      }
+    ],
+    edpuzzleQuestions: [
+      {
+        id: 'edp-pl-1',
+        timestampSeconds: 150,
+        timestampLabel: '02:30',
+        question: 'Quale proprietà rende le resine TERMOPLASTICHE (come PET e PE) adatte al riciclaggio?',
+        options: [
+          'Possono essere sciolte nell\'acqua fredda',
+          'Se riscaldate riacquistano plasticità e fluidità, potendo essere rifuse e rimodellate più volte',
+          'Non si scaldano mai nemmeno a 500 gradi',
+          'Sono fatte interamente di fibre di cotone'
+        ],
+        correctIndex: 1,
+        explanation: 'Le catene macromolecolari delle termoplastiche possono scorrere nuovamente se riscaldate, rendendole riciclabili.',
+        transcriptSnippet: '...le resine termoplastiche (come PET, PE, PVC, polistirolo), che con il calore si ammorbidiscono e possono essere rimodellate più volte...'
+      },
+      {
+        id: 'edp-pl-2',
+        timestampSeconds: 360,
+        timestampLabel: '06:00',
+        question: 'Cosa si ottiene alla fine del processo di selezione, triturazione e lavaggio negli impianti di riciclo della plastica?',
+        options: [
+          'Petrolio greggio puro',
+          'Scaglie e granuli rigenerati di Materia Prima Seconda (MPS) pronti per nuovi manufatti',
+          'Carbon fossile antracite',
+          'Pietre da costruzione'
+        ],
+        correctIndex: 1,
+        explanation: 'Il riciclo meccanico produce granuli rigenerati di MPS che alimentano le fabbriche di contenitori, tubi, vasi e tessuti in pile.',
+        transcriptSnippet: 'Vengono quindi tritate in scaglie, lavate, essiccate ed estruse in granuli rigenerati: le materie prime seconde, pronte per fabbricare nuovi oggetti.'
+      }
+    ],
+    contentSnippet: 'Il 95% dei rifiuti galleggianti nei mari è plastica: differenziare e ridurre gli imballaggi usa-e-getta è una priorità di cittadinanza attiva.'
   },
   {
     id: 'res-yt-salvavita-sicurezza',
@@ -492,10 +1190,72 @@ export const INITIAL_RESOURCES: MediaResource[] = [
     tags: ['Salvavita', 'Messa a Terra', 'Sicurezza', 'Impianti'],
     favorite: false,
     lessonTimestamps: [
-      { time: '00:40', note: 'Il rischio del contatto diretto e indiretto' },
-      { time: '02:10', note: 'Il principio toroidale dell\'interruttore differenziale' },
-      { time: '03:50', note: 'Il cavo giallo-verde e il pozzetto di terra' },
-      { time: '05:15', note: 'Il tasto T di prova mensile sul quadro elettrico' }
+      { time: '00:40', note: 'I pericoli della corrente elettrica: contatto diretto e contatto indiretto' },
+      { time: '02:10', note: 'Il principio del trasformatore toroidale differenziale' },
+      { time: '03:50', note: 'Il conduttore di protezione giallo-verde e il dispersore di terra' },
+      { time: '05:15', note: 'Il pulsante di test T obbligatorio sul centralino di casa' }
+    ],
+    transcript: [
+      {
+        time: '00:40',
+        seconds: 40,
+        speaker: 'Sicurezza Domestica & Elettronica',
+        text: 'Il corpo umano è un conduttore elettrico naturale a causa dell\'acqua e dei sali che contiene. Il contatto con parti in tensione può provocare scosse gravi e arresto cardiaco. Il contatto diretto avviene toccando un filo scoperto; il contatto indiretto toccando la carcassa metallica di un elettrodomestico andato in dispersione.',
+        keyConcept: 'Contatto diretto e indiretto'
+      },
+      {
+        time: '02:10',
+        seconds: 130,
+        speaker: 'Sicurezza Domestica & Elettronica',
+        text: 'L\'interruttore differenziale, comunemente chiamato salvavita, misura costantemente la corrente che entra attraverso la fase e quella che esce attraverso il neutro. Se le due correnti differiscono anche solo di 30 milliampere (perché una parte si disperde verso terra o attraverso una persona), in 30 millisecondi scatta aprendo il circuito.',
+        keyConcept: 'Funzionamento differenziale a 30 mA'
+      },
+      {
+        time: '03:50',
+        seconds: 230,
+        speaker: 'Sicurezza Domestica & Elettronica',
+        text: 'Perché il salvavita funzioni al meglio in caso di guasto a un elettrodomestico, è indispensabile l\'impianto di messa a terra: cavi con guaina a strisce giallo-verdi collegano tutti i telai metallici a una piastra o picchetto di rame conficcato nel terreno, scaricando istantaneamente la corrente vagante nel suolo.',
+        keyConcept: 'Il cavo di terra giallo-verde'
+      },
+      {
+        time: '05:15',
+        seconds: 315,
+        speaker: 'Sicurezza Domestica & Elettronica',
+        text: 'Ogni interruttore differenziale possiede sulla parte frontale un piccolo pulsante contrassegnato con la lettera T, che sta per Test. Le norme di sicurezza consigliano di premerlo una volta al mese per verificare che il meccanismo meccanico di sgancio non sia bloccato dalla polvere.',
+        keyConcept: 'Il test periodico del salvavita'
+      }
+    ],
+    edpuzzleQuestions: [
+      {
+        id: 'edp-salv-1',
+        timestampSeconds: 130,
+        timestampLabel: '02:10',
+        question: 'Cosa rileva l\'interruttore differenziale (salvavita) per decidere di scattare e interrompere l\'energia elettrica?',
+        options: [
+          'La temperatura della stanza se supera i 30 gradi',
+          'Una differenza (dispersione) tra la corrente in ingresso e quella in uscita superiore a 30 milliampere',
+          'Il rumore della lavatrice',
+          'Il consumo totale di kilowattora del mese'
+        ],
+        correctIndex: 1,
+        explanation: 'Il salvavita confronta continuamente la corrente nei due conduttori: se c\'è una differenza, significa che una parte di corrente si sta disperdendo nel corpo di una persona o a terra.',
+        transcriptSnippet: 'L\'interruttore differenziale, comunemente chiamato salvavita, misura costantemente la corrente che entra... e quella che esce...'
+      },
+      {
+        id: 'edp-salv-2',
+        timestampSeconds: 230,
+        timestampLabel: '03:50',
+        question: 'Qual è il colore stabilito dalle norme CEI per il cavo dell\'impianto di messa a terra?',
+        options: [
+          'Marrone scuro',
+          'Giallo-verde a strisce',
+          'Blu chiaro',
+          'Nero opaco'
+        ],
+        correctIndex: 1,
+        explanation: 'Il cavo di messa a terra è obbligatoriamente rivestito da guaina a strisce giallo-verdi per immediato riconoscimento visivo di sicurezza.',
+        transcriptSnippet: '...è indispensabile l\'impianto di messa a terra: cavi con guaina a strisce giallo-verdi collegano tutti i telai metallici...'
+      }
     ],
     contentSnippet: 'Il salvavita scatta in circa 30 millisecondi se rileva una differenza anche di soli 30 mA tra corrente entrante e uscente, salvando la vita.'
   },
