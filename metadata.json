@@ -1,0 +1,6 @@
+{
+  "name": "TecnoDocente - Cruscotto per Docenti di Tecnologia",
+  "description": "Cruscotto per docenti di Tecnologia: pianificazione lezioni, libreria multimediale, registro valutazioni e rubriche, calendario scadenze didattiche, simulazioni interattive di proiezioni ortogonali e disegno tecnico, e quiz per unità didattiche.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
